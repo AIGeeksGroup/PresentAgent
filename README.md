@@ -21,12 +21,12 @@ xxx
 
 ## Todo List
 
-| Task          | Status |
-| ------------- | ------ |
-| code release  | ✅      |
-| api version   | ✅      |
+|     Task      | Status |
+| :-----------: | :----: |
+| code release  |   ✅    |
+|  api version  |   ✅    |
 | local version | **⬜️**  |
-| paper release | ⬜️      |
+| paper release |   ⬜️    |
 
 ## Introduction
 
