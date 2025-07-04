@@ -22,19 +22,13 @@ If you use any content of this repo for your work, please cite the following our
 xxx
 ```
 
----
-
 ## Introduction
+
 We present PresentAgent, a multimodal agent that transforms long-form documents into narrated presentation videos. While existing approaches are limited to generating static slides or text summaries, our method advances beyond these limitations by producing fully synchronized visual and spoken content that closely mimics human-style presentations. To achieve this integration, PresentAgent employs a modular pipeline that systematically segments the input document, plans and renders slide-style visual frames, generates contextual spoken narration with large language models and Text-to-Speech models, and seamlessly composes the final video with precise audio-visual alignment. Given the complexity of evaluating such multimodal outputs, we introduce PresentEval, a unified assessment framework powered by Vision-Language Models that comprehensively scores videos across three critical dimensions: content fidelity, visual clarity, and audience comprehension through prompt-based evaluation. Our experimental validation on a curated dataset of 30 document–presentation pairs demonstrates that PresentAgent approaches human-level quality across all evaluation metrics. These results highlight the significant potential of controllable multimodal agents in transforming static textual materials into dynamic, effective, and accessible presentation formats.
 
-![image](https://github.com/momomoxiaobai/Source/blob/main/Images/arch.png)
+![image](presentagent/arch.png)
 
-
-## Resource: PresentAgent Papers
-
-
-
-## 🔧 Installation & Setup
+## 🔧Resource: PresentAgent Papers
 
 ### 1. Install & Requirements
 
@@ -48,6 +42,7 @@ git clone https://github.com/bytedance/MegaTTS3
 cd MegaTTS3
 ```
 **Requirements (for Linux)**
+
 ``` sh
 
 # Create a python 3.10 conda env (you could also use virtualenv)
@@ -144,150 +139,90 @@ docker run -it -p 7929:7929  megatts3:latest
    npm install
    npm run serve
    ```
-First, you need to upload a PPT template and the document, then click **Generate Slides** to generate and download the PPT. After downloading the PPT, you can modify it in your own way and then click **PPT2Presentation**.
-![image](presentagent/home.png)
-After uploading the PPT, you can click **Start Conversion** to make a presentation video.
-![image](presentagent/ppt2presentation1.png)
-Finally, you will get a presentation video and watch it in the page or download it.
-![image](presentagent/ppt2presentation2.png)
+   ### Usage
 
+   First, you need to upload a PPT template and the document, then click **Generate Slides** to generate and download the PPT. After downloading the PPT, you can modify it in your own way and then click **PPT2Presentation**.
+   ![image](presentagent/home.png)
+   After uploading the PPT, you can click **Start Conversion** to make a presentation video.
+   ![image](presentagent/ppt2presentation1.png)
+   Finally, you will get a presentation video and watch it in the page or download it.
+   ![image](presentagent/ppt2presentation2.png)
 
-### 🧿 Eye Diseases Classification (RGB)
+## 📁 Presentation Benchmark
 
-* **URL**: [https://www.kaggle.com/datasets/gunavenkatdoddi/eye-diseases-classification](https://www.kaggle.com/datasets/gunavenkatdoddi/eye-diseases-classification)
-* Classes: Cataract, Diabetic Retinopathy, Glaucoma, Normal
-* Balanced dataset
-* Random split: 80% train / 20% test
+### Doc2Present Benchmark
 
-<p align="left">
-  <img src="https://github.com/AIGeeksGroup/MediAug/blob/main/eye_disease.jpg" width="28%" />
-  <img src="https://github.com/AIGeeksGroup/MediAug/blob/main/eye_tsne.jpg" width="33%" />
-</p>
+To support the evaluation of document to presentation video generation, we curate the **Doc2Present Benchmark**, a diverse dataset of document–presentation video pairs spanning multiple domains. As shown in the following figure, our benchmark encompasses four representative document types (academic papers, web pages, technical blogs, and slides) paired with human-authored videos, covering diverse real-world domains like education, research, and business reports.
 
-The left pie chart shows the class distribution across the four categories, demonstrating good class balance. The right t-SNE plot provides a feature-level visualization of the high-dimensional distribution of eye disease samples after dimensionality reduction.
+![image](presentagent/datasets.jpg)
 
-### 🧠 Brain Tumor MRI Classification (Grayscale)
+We collect **30 high-quality video samples** from **public platforms**, **educational repositories**, and **professional presentation archives**. Each video follows a structured narration format, combining slide-based visuals with synchronized voiceover. We manually align each video with its source document and ensure the following conditions are met: 
 
-* **URL**: [https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri/data](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri/data)
-* Classes: Glioma, Meningioma, Pituitary, No Tumor
-* Imbalanced dataset
-* Random split: 80% train / 20% test
+- The content structure of the video follows that of the document. 
 
-<p align="left">
-  <img src="https://github.com/AIGeeksGroup/MediAug/blob/main/brain_disease.jpg" width="28%" />
-  <img src="https://github.com/AIGeeksGroup/MediAug/blob/main/brain_tsne.jpg" width="33%" />
-</p>
+- The visuals convey document information in a compact, structured form.
+-  The narration and slides are well-aligned temporally.
 
-The pie chart (left) illustrates the class distribution among four tumor categories. The t-SNE plot (right) visualizes the distribution of brain tumor samples in a two-dimensional space, reflecting their separability and overlap in feature space.
+The average document length is **3,000–8,000 words**, while the corresponding videos range from **1 to 2 minutes** and contain **5-10 slides**. This setting highlights the core challenge of the task: transforming dense, domain-specific documents into effective and digestible multimodal presentations.
 
+### PresentEval
 
----
+To assess the quality of generated presentation videos, we adopt two complementary evaluation strategies: Objective Quiz Evaluation and Subjective Scoring.
 
-## 🏗️ Method Overview
+![image](presentagent/eval.jpg)
 
-We evaluate six mix-based visual augmentation techniques:
+For each video, we provide the vision-language model with the complete set of slide images and the full narration transcript as a unified input—simulating how a real viewer would experience the presentation. 
 
-* `MixUp`: Interpolation between image-label pairs
-* `YOCO`: Patch-based diverse local/global transforms
-* `CropMix`: Multi-scale random crop blending
-* `CutMix`: Box-replace image regions + interpolated labels
-* `AugMix`: Diverse chained augmentations with consistency
-* `SnapMix`: CAM-based semantic-aware mixing
+- In Objective Quiz Evaluation, the model answers a fixed set of factual questions to determine whether the video accurately conveys the key information from the source content. 
+- In Subjective Scoring, the model evaluates the video along three dimensions: the coherence of the narration, the clarity and design of the visuals, and the overall ease of understanding. 
+- All evaluations are conducted without ground-truth references and rely entirely on the model’s interpretation of the presented content.
 
-Each method is evaluated on two backbones:
+For Objective Quiz Evaluation, to evaluate whether a generated presentation video effectively conveys the core content of its source document, we use a fixed-question comprehension evaluation protocol. Specifically, we manually design five multiple-choice questions for each document, tailored to its content as follows:
 
-* **ResNet-50** (CNN)
-* **ViT-B** (Transformer)
+|     Prensentation of Web Pages      | What is the main feature highlighted in the iPhone’s promotional webpage? |
+| :---------------------------------: | ------------------------------------------------------------ |
+|                 A.                  | A more powerful chip for faster performance                  |
+|                 B.                  | A brighter and more vibrant display                          |
+|                 C.                  | An upgraded camera system with better lenses                 |
+|                 D.                  | A longer-lasting and more efficient battery                  |
+| **Prensentation of Academic Paper** | What primary research gap did the authors aim to address by introducing the FineGym dataset? |
+|                 A.                  | Lack of low-resolution sports footage for compression studies |
+|                 B.                  | Need for fine-grained action understanding that goes beyond coarse categories |
+|                 C.                  | Absence of synthetic data to replace human annotations       |
+|                 D.                  | Shortage of benchmarks for background context recognition    |
 
----
+For Subjective Scoring, to evaluate the quality of generated presentation videos, we adopt a prompt-based assessment using vision-language models. The prompts are as follows:
 
-## 🧪 Experiments
+|     Video     | Scoring Prompt                                               |
+| :-----------: | ------------------------------------------------------------ |
+|  Narr. Coh.   | “How coherent is the narration across the video? Are the ideas logically connected and easy to follow?” |
+| Visual Appeal | “How would you rate the visual design of the slides in terms of layout, aesthetics, and overall quality?” |
+|  Comp. Diff.  | “How easy is it to understand the presentation as a viewer? Were there any confusing or contradictory parts?” |
+|   **Audio**   | **Scoring Prompt**                                           |
+|  Narr. Coh.   | “How coherent is the narration throughout the audio? Are the ideas logically structured and easy to follow?” |
+| Audio Appeal  | “How pleasant and engaging is the narrator’s voice in terms of tone, pacing, and delivery?” |
+
+## 🧪 Experiment
 
 ### ✳️ Comparative Study
 
-| Dataset     | Model     | Best Aug | Accuracy |
-| ----------- | --------- | -------- | -------- |
-| Brain MRI   | ResNet-50 | MixUp    | 79.19%   |
-| Brain MRI   | ViT-B     | SnapMix  | 99.44%   |
-| Eye Disease | ResNet-50 | YOCO     | 91.60%   |
-| Eye Disease | ViT-B     | CutMix   | 97.94%   |
-
-### 🔬 Ablation Study
-
-Hyperparameter sweep for CutMix (alpha). Best performance at:
-
-* ResNet-50: α = 1.0 → 91.83% Accuracy
-* ViT-B: α = 1.0 → 97.94% Accuracy
+| Method       | Model             | Quiz Accuracy | Video Score(mean) | Audio Score(mean) |
+| ------------ | ----------------- | ------------- | ----------------- | ----------------- |
+| Human        | Human             | 0.56          | 4.47              | 4.80              |
+| PresentAgent | Claude-3.7-sonnet | 0.64          | 4.00              | 4.53              |
+| PresentAgent | Qwen-VL-Max       | 0.52          | 4.47              | 4.60              |
+| PresentAgent | Gemini-2.5-pro    | 0.52          | 4.33              | 4.33              |
+| PresentAgent | Gemini-2.5-flash  | 0.52          | 4.33              | 4.40              |
+| PresentAgent | GPT-4o-Mini       | 0.64          | 4.67              | 4.40              |
+| PresentAgent | GPT-4o            | 0.56          | 3.93              | 4.47              |
 
 ---
 
-## 💻 Training & Evaluation
+## ⭐ Contribute
 
-To run an experiment with MediAug, follow these steps:
+We warmly welcome you to contribute to our project by submitting pull requests—your involvement is key to keeping our work at the cutting edge! Specifically, we encourage efforts to expand its compatibility with the **latest visual-language (VL) models** and **text-to-speech (TTS) models**, ensuring the project stays aligned with the most recent advancements in these rapidly evolving fields.
 
-1. **Choose dataset**: `eye` or `brain`
-2. **Select model**: `resnet50` or `vit_b`
-3. **Pick augmentation method**: one of `mixup`, `cutmix`, `snapmix`, `yoco`, `cropmix`, `augmix`
-
-### Example Commands
-
-Run brain tumor classification with ViT-B and SnapMix:
-
-```bash
-python train.py --dataset brain --model vit_b --aug snapmix
-```
-
-Run eye disease classification with ResNet-50 and YOCO:
-
-```bash
-python train.py --dataset eye --model resnet50 --aug yoco
-```
-
-Evaluate a trained model on the test set:
-
-```bash
-python evaluate.py --dataset brain --model vit_b --checkpoint ./checkpoints/vit_b_snapmix.pt
-```
-
-Visualize augmentation effects (optional):
-
-```bash
-python visualize.py --dataset eye --aug mixup --output_dir ./visuals
-```
-
-Training details:
-
-* Epochs: 50
-* Optimizer: Adam
-* Learning Rate: 0.001
-* Batch Size: 32
-* Image Size: 224×224
-* GPU: Tesla T4 or A100 (Google Colab, via mounted Google Drive)
-* CPU: Intel Xeon, 80GB RAM
-
-> **Note:** All experiments were conducted on Google Colab. The datasets were uploaded to Google Drive and accessed using standard Colab notebook mounts (e.g., `from google.colab import drive`). Kaggle was not used for runtime.
-
-* Epochs: 50
-* Optimizer: Adam
-* Learning Rate: 0.001
-* Image Size: 224x224
-* Hardware: Tesla T4 / A100, Intel Xeon CPU, 80GB RAM
-
-```bash
-python train.py --dataset eye --model resnet50 --aug mixup
-```
-
----
-
-## 🧠 Model Zoo
-
-| Model     | Dataset | Aug     | Accuracy |
-| --------- | ------- | ------- | -------- |
-| ResNet-50 | Eye     | YOCO    | 91.60%   |
-| ViT-B     | Brain   | SnapMix | 99.44%   |
-
-
----
+Beyond model updates, we also invite you to explore adding new features that could enhance the project’s functionality, usability, or versatility. Whether it’s optimizing existing workflows, introducing novel tools, or addressing unmet needs in the community, your creative contributions will help make this project more robust and valuable for everyone.
 
 ## Acknowledgement
 We thank the authors of [PPTAgent](https://github.com/icip-cas/PPTAgent), [PPT Presenter](https://github.com/chaonan99/ppt_presenter), and [MegaTTS3](https://github.com/bytedance/MegaTTS3) for their open-source code.
