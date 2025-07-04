@@ -7,7 +7,7 @@ This is the code repository for the paper:
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>#</sup>Corresponding author.
 >
 > **[[arXiv]]()** **[[Paper with Code]]()** **[[HF Paper]]()**
- 
+
 To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
 
 https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
@@ -36,15 +36,56 @@ We present PresentAgent, a multimodal agent that transforms long-form documents 
 
 ## 🔧 Installation & Setup
 
+### 1. Install & Run PPTAgent
+
+#### Installation Guide
+
 ```bash
-git clone https://github.com/AIGeeksGroup/PresentAgent.git
-cd PresentAgent
-pip install -r requirements.txt
+pip install git+https://github.com/icip-cas/PPTAgent.git
 ```
 
-To use on **Google Colab** or **Kaggle**, enable GPU and configure data mounting as required.
+#### Usage
 
----
+##### Generate Via WebUI
+
+1. **Serve Backend**
+
+   Initialize your models in `pptagent_ui/backend.py`:
+   ```python
+   language_model = AsyncLLM(
+       model="Qwen2.5-72B-Instruct",
+       api_base="http://localhost:7812/v1"
+   )
+   vision_model = AsyncLLM(model="gpt-4o-2024-08-06")
+   text_embedder = AsyncLLM(model="text-embedding-3-small")
+   ```
+   Or use the environment variables:
+
+   ```bash
+   export OPENAI_API_KEY="your_key"
+   export API_BASE="http://your_service_provider/v1"
+   export LANGUAGE_MODEL="Qwen2.5-72B-Instruct-GPTQ-Int4"
+   export VISION_MODEL="gpt-4o-2024-08-06"
+   export TEXT_MODEL="text-embedding-3-small"
+   ```
+
+2. **Launch Frontend**
+
+   > Note: The backend API endpoint is configured at `pptagent_ui/vue.config.js`
+
+   ```bash
+   cd pptagent_ui
+   npm install
+   npm run serve
+   ```
+
+##### Generate Via Code
+
+For detailed information on programmatic generation, please refer to the `pptagent_ui/backend.py:ppt_gen` and `test/test_pptgen.py`.
+
+### 2. Install megatts3
+
+You can Install megatts3 by the following Web Page: [bytedance/MegaTTS3](https://github.com/bytedance/MegaTTS3)
 
 
 
