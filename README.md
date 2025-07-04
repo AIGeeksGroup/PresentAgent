@@ -44,9 +44,11 @@ We present PresentAgent, a multimodal agent that transforms long-form documents 
 pip install git+https://github.com/icip-cas/PPTAgent.git
 ```
 
-#### Usage
+### 2. Install megatts3
 
-##### Generate Via WebUI
+You can Install megatts3 by the following Web Page: [bytedance/MegaTTS3](https://github.com/bytedance/MegaTTS3)
+
+### 3. Generate Via WebUI
 
 1. **Serve Backend**
 
@@ -83,15 +85,11 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
    npm run serve
    ```
 
-### 2. Install megatts3
+![image](https://github.com/AIGeeksGroup/PresentAgent/presentagent/home.png)
 
-You can Install megatts3 by the following Web Page: [bytedance/MegaTTS3](https://github.com/bytedance/MegaTTS3)
+![image](https://github.com/AIGeeksGroup/PresentAgent/presentagent/ppt2presentation.png)
 
-
-
-```
-
-```
+![image](https://github.com/AIGeeksGroup/PresentAgent/presentagent/ppt2presentation2.png)
 
 
 ### 🧿 Eye Diseases Classification (RGB)
