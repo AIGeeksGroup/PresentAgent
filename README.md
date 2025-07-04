@@ -6,7 +6,7 @@ This is the code repository for the paper:
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>#</sup>Corresponding author.
 >
-> **[[arXiv]]()** **[[Paper with Code]]()** **[[HF Paper]]()**
+> ### [Paper]() | [HF Demo](https://huggingface.co/spaces/AIGeeksGroup/PresentAgent) | [Papers With Code]() | [HF Paper]()
 
 To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
 
