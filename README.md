@@ -50,7 +50,7 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
 
 1. **Serve Backend**
 
-   Initialize your models in `pptagent_ui/backend.py`:
+   Initialize your models in `presentagent/backend.py`:
    ```python
    language_model = AsyncLLM(
        model="Qwen2.5-72B-Instruct",
@@ -71,10 +71,10 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
 
 2. **Launch Frontend**
 
-   > Note: The backend API endpoint is configured at `pptagent_ui/vue.config.js`
+   > Note: The backend API endpoint is configured at `presentagent/vue.config.js`
 
    ```bash
-   cd pptagent_ui
+   cd presentagent
    npm install
    npm run serve
    ```
