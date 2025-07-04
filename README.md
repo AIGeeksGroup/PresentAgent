@@ -38,7 +38,9 @@ We present PresentAgent, a multimodal agent that transforms long-form documents 
 ### 1. Install & Requirements
 
 ```bash
-pip install git+https://github.com/icip-cas/PPTAgent.git
+conda create -n presentagent python=3.11
+conda activate presentagent
+pip install -r requirements.txt
 cd presentagent/MegaTTS3
 ```
 **Requirements (for Linux)**
