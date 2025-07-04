@@ -7,10 +7,12 @@ This is the code repository for the paper:
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>#</sup>Corresponding author.
 >
 > **[[arXiv]]()** **[[Paper with Code]]()** **[[HF Paper]]()**
-> 
-> To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
->
-> https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
+ 
+To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
+
+https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
+
+---
 
 
 ## Citation
@@ -20,7 +22,7 @@ If you use any content of this repo for your work, please cite the following our
 xxx
 ```
 
-
+---
 
 ## Introduction
 We present PresentAgent, a multimodal agent that transforms long-form documents into narrated presentation videos. While existing approaches are limited to generating static slides or text summaries, our method advances beyond these limitations by producing fully synchronized visual and spoken content that closely mimics human-style presentations. To achieve this integration, PresentAgent employs a modular pipeline that systematically segments the input document, plans and renders slide-style visual frames, generates contextual spoken narration with large language models and Text-to-Speech models, and seamlessly composes the final video with precise audio-visual alignment. Given the complexity of evaluating such multimodal outputs, we introduce PresentEval, a unified assessment framework powered by Vision-Language Models that comprehensively scores videos across three critical dimensions: content fidelity, visual clarity, and audience comprehension through prompt-based evaluation. Our experimental validation on a curated dataset of 30 document–presentation pairs demonstrates that PresentAgent approaches human-level quality across all evaluation metrics. These results highlight the significant potential of controllable multimodal agents in transforming static textual materials into dynamic, effective, and accessible presentation formats.
