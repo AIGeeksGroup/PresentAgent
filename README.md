@@ -1,4 +1,4 @@
-# PresentAgent: Multimodal Agent for Presentation Video Generation
+# <img src="https://github.com/AIGeeksGroup/PresentAgent/blob/main/presentagent/speaker_logo.png" alt="logo" width="50"/> PresentAgent: Multimodal Agent for Presentation Video Generation
 This is the code repository for the paper:
 > **PresentAgent: Multimodal Agent for Presentation Video Generation**
 >
