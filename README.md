@@ -7,8 +7,10 @@ This is the code repository for the paper:
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>#</sup>Corresponding author.
 >
 > **[[arXiv]]()** **[[Paper with Code]]()** **[[HF Paper]]()**
-
-![image](https://github.com/momomoxiaobai/Source/blob/main/Images/arch.png)
+> 
+> To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
+>
+> https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
 
 
 ## Citation
@@ -18,11 +20,13 @@ If you use any content of this repo for your work, please cite the following our
 xxx
 ```
 
+
+
 ## Introduction
 We present PresentAgent, a multimodal agent that transforms long-form documents into narrated presentation videos. While existing approaches are limited to generating static slides or text summaries, our method advances beyond these limitations by producing fully synchronized visual and spoken content that closely mimics human-style presentations. To achieve this integration, PresentAgent employs a modular pipeline that systematically segments the input document, plans and renders slide-style visual frames, generates contextual spoken narration with large language models and Text-to-Speech models, and seamlessly composes the final video with precise audio-visual alignment. Given the complexity of evaluating such multimodal outputs, we introduce PresentEval, a unified assessment framework powered by Vision-Language Models that comprehensively scores videos across three critical dimensions: content fidelity, visual clarity, and audience comprehension through prompt-based evaluation. Our experimental validation on a curated dataset of 30 document–presentation pairs demonstrates that PresentAgent approaches human-level quality across all evaluation metrics. These results highlight the significant potential of controllable multimodal agents in transforming static textual materials into dynamic, effective, and accessible presentation formats.
 Code will be available at [https://github.com/AIGeeksGroup/PresentAgent](https://github.com/AIGeeksGroup/PresentAgent).
 
-![image](https://github.com/momomoxiaobai/Source/blob/main/Images/first.jpg)
+![image](https://github.com/momomoxiaobai/Source/blob/main/Images/arch.png)
 
 
 ## Resource: PresentAgent Papers
@@ -185,40 +189,6 @@ python train.py --dataset eye --model resnet50 --aug mixup
 
 ---
 
-## 📓 Notebooks
+## Acknowledgement
+We thank the authors of [PPTAgent](https://github.com/icip-cas/PPTAgent), [PPT Presenter](https://github.com/chaonan99/ppt_presenter) and [MegaTTS3](https://github.com/bytedance/MegaTTS3) for their open-source code.
 
-The following notebooks train and evaluate models used in our experiments:
-
-* `resnet50.ipynb`: Trains a ResNet-50 model on the selected dataset with different augmentation strategies. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Training%20model/resnet50.ipynb)
-* `VIT-B.ipynb`: Trains a ViT-B (Vision Transformer) model on the selected dataset and compares augmentation effects. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Training%20model/VIT-B.ipynb)
-
-The following notebooks apply batch augmentation and visualization on the full **Brain MRI** dataset:
-
-* `AugMix_brain.ipynb`: Applies AugMix to the entire brain dataset and visualizes a batch of augmented images. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/AugMix_brain.ipynb)
-* `CropMix_brain.ipynb`: Performs CropMix augmentation across the brain dataset with comparative visualization. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/CropMix_brain.ipynb)
-* `CutMix_brain.ipynb`: Shows CutMix applied to MRI samples in batch for augmentation analysis. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/CutMix_brain.ipynb)
-* `MixUp_brain.ipynb`: Executes MixUp over MRI images and plots combined outputs. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/MixUp_brain.ipynb)
-* `SnapMix_brain.ipynb`: Demonstrates CAM-based SnapMix on brain images at dataset level. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/SnapMix_brain.ipynb)
-* `YOCO_brain.ipynb`: Applies YOCO to a batch of brain samples and shows spatially mixed results. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/brain/YOCO_brain.ipynb)
-
-The following notebooks apply batch augmentation and visualization on the full **Eye Disease** dataset:
-
-* `AugMix_eye.ipynb`: Applies AugMix on the entire eye disease dataset with visual comparisons. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/AugMix_eye.ipynb)
-* `CropMix_eye.ipynb`: Runs CropMix augmentation over eye images and displays batched transformations. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/CropMix_eye.ipynb)
-* `CutMix_eye.ipynb`: Demonstrates CutMix applied to eye fundus images with batch-level visualization. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/CutMix_eye.ipynb)
-* `MixUp_eye.ipynb`: Mixes image-label pairs from the eye dataset and renders visual effects. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/MixUp_eye.ipynb)
-* `SnapMix_eye.ipynb`: Showcases SnapMix on eye disease samples with semantic-preserving augmentation. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/SnapMix_eye.ipynb)
-* `YOCO_eye.ipynb`: Uses YOCO to enhance eye data samples with region-wise mixed transforms. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/Image%20augment%20batch%20processing%20code/eye/YOCO_eye.ipynb)
-
-The following notebooks demonstrate how each augmentation method is applied to a single medical image:
-
-* `AugMix_for_single_picture.ipynb`: Applies AugMix transformations step-by-step to one image and visualizes the results. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/AugMix_for_single_picture.ipynb)
-* `CropMix_for_single_picture.ipynb`: Demonstrates the CropMix augmentation process with visualization on a single image. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/CropMix_for_single_picture.ipynb)
-* `CutMix_for_single_picture.ipynb`: Simulates CutMix augmentation by mixing image patches and overlays on one image. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/CutMix_for_single_picture.ipynb)
-* `MixUp_for_single_picture.ipynb`: Shows how MixUp blends two images and labels, visualized clearly. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/MixUp_for_single_picture.ipynb)
-* `SnapMix_for_single_picture.ipynb`: Explains SnapMix strategy by combining semantic patches with attention maps. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/SnapMix_for_single_picture.ipynb)
-* `YOCO_for_single_picture.ipynb`: Visualizes YOCO's patch-wise mixed local augmentations on a single image. [View notebook](https://github.com/AIGeeksGroup/MediAug/blob/main/Image%20Augmentation%20Code/YOCO_for_single_picture.ipynb)
-
----
-
-For questions, contact [**y.zhao2@latrobe.edu.au**](mailto:y.zhao2@latrobe.edu.au).
