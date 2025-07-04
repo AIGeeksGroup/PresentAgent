@@ -84,12 +84,12 @@ You can Install megatts3 by the following Web Page: [bytedance/MegaTTS3](https:/
    npm install
    npm run serve
    ```
+<p align="left">
+  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/home.png" width="28%" />
+  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation1.png" width="28%" />
+  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation2.png" width="28%" />
+</p>
 
-![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/home.png)
-
-![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation1.png)
-
-![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation2.png)
 
 
 ### 🧿 Eye Diseases Classification (RGB)
