@@ -8,7 +8,8 @@ This is the code repository for the paper:
 >
 > ### [Paper]() | [HF Demo](https://huggingface.co/spaces/AIGeeksGroup/PresentAgent) | [Papers With Code]() | [HF Paper]()
 
-To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent without any manual curation.
+> [!TIP]
+> 🙋🏻‍♀️ To learn more about PresentAgent, please see the following presentation video, which was generated entirely by PresentAgent **without** any manual curation.
 
 https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
 
@@ -23,7 +24,7 @@ xxx
 
 - ✅ code release
 - ✅ api version
-- **⬜️** local version
+- ⬜️ local version
 - ⬜️ paper release
 - ⬜️ gradio demo
 
