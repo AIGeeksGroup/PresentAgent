@@ -34,10 +34,6 @@ We present PresentAgent, a multimodal agent that transforms long-form documents 
 
 ```bash
 pip install git+https://github.com/icip-cas/PPTAgent.git
-```
-
-``` sh
-# Clone the repository
 cd presentagent/MegaTTS3
 ```
 **Requirements (for Linux)**
@@ -57,13 +53,6 @@ export CUDA_VISIBLE_DEVICES=0
 
 **Requirements (for Windows)**
 ``` sh
-# [The Windows version is currently under testing]
-# Comment below dependence in requirements.txt:
-# # WeTextProcessing==1.0.4.1
-
-# Create a python 3.10 conda env (you could also use virtualenv)
-conda create -n megatts3-env python=3.10
-conda activate megatts3-env
 pip install -r requirements.txt
 conda install -y -c conda-forge pynini==2.1.5
 pip install WeTextProcessing==1.0.3
