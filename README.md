@@ -87,9 +87,9 @@ You can Install megatts3 by the following Web Page: [bytedance/MegaTTS3](https:/
 
 ![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/home.png)
 
-![image](https://github.com/AIGeeksGroup/PresentAgent/presentagent/tree/main/ppt2presentation.png)
+![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation.png)
 
-![image](https://github.com/AIGeeksGroup/PresentAgent/presentagent/tree/main/ppt2presentation2.png)
+![image](https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation2.png)
 
 
 ### 🧿 Eye Diseases Classification (RGB)
