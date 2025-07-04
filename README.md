@@ -144,12 +144,12 @@ docker run -it -p 7929:7929  megatts3:latest
    npm install
    npm run serve
    ```
-<p align="left">
-  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/home.png" width="28%" />
-  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation1.png" width="28%" />
-  <img src="https://github.com/AIGeeksGroup/PresentAgent/tree/main/presentagent/ppt2presentation2.png" width="28%" />
-</p>
-
+First, you need to upload a PPT template and the document, then click **Generate Slides** to generate and download the PPT. After downloading the PPT, you can modify it in your own way and then click **PPT2Presentation**.
+![image](presentagent/home.png)
+After uploading the PPT, you can click **Start Conversion** to make a presentation video.
+![image](presentagent/ppt2presentation1.png)
+Finally, you will get a presentation video and watch it in the page or download it.
+![image](presentagent/ppt2presentation2.png)
 
 
 ### 🧿 Eye Diseases Classification (RGB)
