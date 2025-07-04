@@ -21,12 +21,11 @@ xxx
 
 ## Todo List
 
-|     Task      | Status |
-| :-----------: | :----: |
-| code release  |   ✅    |
-|  api version  |   ✅    |
-| local version | **⬜️**  |
-| paper release |   ⬜️    |
+- ✅ code release
+- ✅ api version
+- **⬜️** local version
+- ⬜️ paper release
+- ⬜️ gradio demo
 
 ## Introduction
 
