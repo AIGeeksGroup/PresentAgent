@@ -1,0 +1,17 @@
+torch==2.3.0
+torchaudio==2.3.0
+numpy<2
+setproctitle==1.3.3
+attrdict==2.0.1
+librosa==0.10.2.post1
+langdetect==1.0.9
+pydub==0.25.1
+pyloudnorm==0.1.1
+modelscope==1.22.2
+transformers>=4.41.2,<=4.49.0,!=4.46.*,!=4.47.*,!=4.48.*;python_version<'3.10'
+transformers>=4.41.2,<=4.49.0,!=4.46.*,!=4.47.*,!=4.48.0;python_version>='3.10'
+x-transformers==1.44.4
+torchdiffeq==0.2.5
+openai-whisper==20240930
+httpx==0.28.1
+gradio==5.23.1
