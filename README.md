@@ -12,15 +12,21 @@ To learn more about PresentAgent, please see the following presentation video, w
 
 https://github.com/user-attachments/assets/240d3ae9-61a1-4e5f-98d7-9c20a99f4c2b
 
----
-
-
 ## Citation
 
 If you use any content of this repo for your work, please cite the following our paper:
 ```
 xxx
 ```
+
+## Todo List
+
+| Task          | Status |
+| ------------- | ------ |
+| code release  | ✅      |
+| api version   | ✅      |
+| local version | **⬜️**  |
+| paper release | ⬜️      |
 
 ## Introduction
 
@@ -176,15 +182,15 @@ For Subjective Scoring, to evaluate the quality of generated presentation videos
 
 ### ✳️ Comparative Study
 
-| Method       | Model             | Quiz Accuracy | Video Score(mean) | Audio Score(mean) |
-| ------------ | ----------------- | ------------- | ----------------- | ----------------- |
-| Human        | Human             | 0.56          | 4.47              | 4.80              |
-| PresentAgent | Claude-3.7-sonnet | 0.64          | 4.00              | 4.53              |
-| PresentAgent | Qwen-VL-Max       | 0.52          | 4.47              | 4.60              |
-| PresentAgent | Gemini-2.5-pro    | 0.52          | 4.33              | 4.33              |
-| PresentAgent | Gemini-2.5-flash  | 0.52          | 4.33              | 4.40              |
-| PresentAgent | GPT-4o-Mini       | 0.64          | 4.67              | 4.40              |
-| PresentAgent | GPT-4o            | 0.56          | 3.93              | 4.47              |
+|    Method    |       Model       | Quiz Accuracy | Video Score(mean) | Audio Score(mean) |
+| :----------: | :---------------: | :-----------: | :---------------: | :---------------: |
+|    Human     |       Human       |     0.56      |       4.47        |       4.80        |
+| PresentAgent | Claude-3.7-sonnet |     0.64      |       4.00        |       4.53        |
+| PresentAgent |    Qwen-VL-Max    |     0.52      |       4.47        |       4.60        |
+| PresentAgent |  Gemini-2.5-pro   |     0.52      |       4.33        |       4.33        |
+| PresentAgent | Gemini-2.5-flash  |     0.52      |       4.33        |       4.40        |
+| PresentAgent |    GPT-4o-Mini    |     0.64      |       4.67        |       4.40        |
+| PresentAgent |      GPT-4o       |     0.56      |       3.93        |       4.47        |
 
 ---
 
