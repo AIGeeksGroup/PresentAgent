@@ -6,14 +6,14 @@
       <div class="upload-buttons">
         <div class="upload-section">
           <label for="pptx-upload" class="upload-label">
-            Upload PPTX
+            Upload PPT Template
             <span v-if="pptxFile" class="uploaded-symbol">✔️</span>
           </label>
           <input type="file" id="pptx-upload" @change="handleFileUpload($event, 'pptx')" accept=".pptx" />
         </div>
         <div class="upload-section">
           <label for="pdf-upload" class="upload-label">
-            Upload PDF
+            Upload File
             <span v-if="pdfFile" class="uploaded-symbol">✔️</span>
           </label>
           <input type="file" id="pdf-upload" @change="handleFileUpload($event, 'pdf')" accept=".pdf" />
@@ -31,7 +31,7 @@
 
       <!-- Row 3: Buttons -->
       <div class="action-buttons">
-        <button @click="goToGenerate" class="next-button">Next</button>
+        <button @click="goToGenerate" class="next-button">Generate Slides</button>
         <button @click="goToPptToVideo" class="ppt-video-button">PPT2Presentation</button>
       </div>
     </div>
@@ -166,7 +166,7 @@ export default {
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .upload-label:hover {
