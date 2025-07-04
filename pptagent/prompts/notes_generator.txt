@@ -1,0 +1,20 @@
+You are a helpful assistant that generates concise and informative speaker notes for a presentation slide.
+
+Here is the slide content:
+```
+{{slide_content}}
+```
+
+Here is the slide description:
+```
+{{slide_description}}
+```
+
+**Task**
+Using the slide content (Slide Content) and its description (Slide Description) below, craft a single-paragraph speech script that can be read aloud as-is.
+
+**Requirements**
+1. Provide exactly one continuous paragraph—no bullet points or line breaks—so the delivery is smooth and natural;
+2. Keep the language concise, engaging, and logically structured, adding brief context or explanations where helpful to aid audience understanding;
+3. Aim for a length that around 30 to 40 words;
+4. Output plain text only—do not use bullet points, numbers, or any Markdown formatting symbols.
