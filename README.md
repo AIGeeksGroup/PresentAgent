@@ -69,6 +69,10 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
    export TEXT_MODEL="text-embedding-3-small"
    ```
 
+   ```bash
+   python backend.py
+   ```
+
 2. **Launch Frontend**
 
    > Note: The backend API endpoint is configured at `presentagent/vue.config.js`
@@ -78,10 +82,6 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
    npm install
    npm run serve
    ```
-
-##### Generate Via Code
-
-For detailed information on programmatic generation, please refer to the `pptagent_ui/backend.py:ppt_gen` and `test/test_pptgen.py`.
 
 ### 2. Install megatts3
 
