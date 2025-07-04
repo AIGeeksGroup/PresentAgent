@@ -191,5 +191,5 @@ python train.py --dataset eye --model resnet50 --aug mixup
 ---
 
 ## Acknowledgement
-We thank the authors of [PPTAgent](https://github.com/icip-cas/PPTAgent), [PPT Presenter](https://github.com/chaonan99/ppt_presenter) and [MegaTTS3](https://github.com/bytedance/MegaTTS3) for their open-source code.
+We thank the authors of [PPTAgent](https://github.com/icip-cas/PPTAgent), [PPT Presenter](https://github.com/chaonan99/ppt_presenter), and [MegaTTS3](https://github.com/bytedance/MegaTTS3) for their open-source code.
 
