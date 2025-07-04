@@ -7,7 +7,7 @@ import os
 import sys
 import traceback
 import uuid
-import subprocess       # 仍可保留，部分代码用得到
+import subprocess
 import tempfile
 from contextlib import asynccontextmanager
 from copy import deepcopy
@@ -29,7 +29,7 @@ from fastapi import (
 )
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
-
+sys.path.append("../")
 import pptagent.induct as induct
 import pptagent.pptgen as pptgen
 from pptagent.document import Document
@@ -38,16 +38,12 @@ from pptagent.multimodal import ImageLabler
 from pptagent.presentation import Presentation
 from pptagent.utils import Config, get_logger, package_join, pjoin, ppt_to_images_async
 
-# ----------------------------------------------------------------------
-# helpers: 把阻塞调用放线程池 / 子进程，避免卡住事件循环
-# ----------------------------------------------------------------------
+
 async def run_blocking(func, *args, **kw):
-    """在默认线程池执行同步(耗 CPU / IO)函数"""
     loop = asyncio.get_running_loop()
     return await loop.run_in_executor(None, functools.partial(func, *args, **kw))
 
 async def run_cmd(cmd: list[str]):
-    """异步执行 shell 命令，代替 subprocess.run"""
     proc = await asyncio.create_subprocess_exec(
         *cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
     )
@@ -62,10 +58,7 @@ DEBUG = True if len(sys.argv) == 1 else False
 RUNS_DIR = package_join("runs")
 STAGES = ["PPT Parsing", "PDF Parsing", "PPT Analysis", "PPT Generation", "Success!"]
 
-# PPT转视频相关常量
-PPT_VIDEO_STAGES = ["解析PPT文件", "生成语音", "合成视频"]
 
-# 存储PPT转视频任务的进度
 ppt_video_progress_store: dict[str, dict] = {}
 
 models = ModelManager()
@@ -88,10 +81,10 @@ app.add_middleware(
 progress_store: dict[str, dict] = {}
 active_connections: dict[str, WebSocket] = {}
 
-# PPT转视频WebSocket连接
+
 ppt_video_active_connections: dict[str, WebSocket] = {}
 
-# -------- ProgressManager（原样） -------------------------------------------------
+
 class ProgressManager:
     def __init__(self, task_id: str, stages: list[str], debug: bool = True):
         self.task_id = task_id
@@ -228,21 +221,17 @@ async def hello():
 
 @app.post("/api/ppt-to-video")
 async def create_ppt_video_task(pptFile: UploadFile = File(...)):
-    """创建PPT转视频任务"""
     task_id = str(uuid.uuid4())
-    logger.info(f"PPT转视频任务创建: {task_id}")
+    logger.info(f"PPT2Presentation task created: {task_id}")
 
-    # 创建任务目录
     task_dir = pjoin(RUNS_DIR, "ppt_video", task_id)
     os.makedirs(task_dir, exist_ok=True)
 
-    # 保存上传的PPT文件
     ppt_blob = await pptFile.read()
     ppt_path = pjoin(task_dir, "source.pptx")
     with open(ppt_path, "wb") as f:
         f.write(ppt_blob)
 
-    # 初始化任务进度
     ppt_video_progress_store[task_id] = {
         "status": "processing",
         "current_step": 1,
@@ -253,7 +242,6 @@ async def create_ppt_video_task(pptFile: UploadFile = File(...)):
         "ppt_path": ppt_path
     }
 
-    # 异步启动PPT转视频任务
     asyncio.create_task(process_ppt_to_video(task_id))
     return {"task_id": task_id}
 
@@ -274,23 +262,18 @@ async def websocket_ppt_video_endpoint(websocket: WebSocket, task_id: str):
 
 
 async def process_ppt_to_video(task_id: str):
-    """处理PPT转视频的主要逻辑（核心耗时环节改成异步）"""
     task_dir = ppt_video_progress_store[task_id]["task_dir"]
     try:
         ppt_path = ppt_video_progress_store[task_id]["ppt_path"]
-
-        # 1️⃣ 解析 PPT
         ppt_video_progress_store[task_id].update(current_step=1, progress_percentage=10.00)
         await send_ppt_video_progress(task_id)
 
-        # 2️⃣ LibreOffice 转 PDF（子进程异步）
         pdf_path = pjoin(task_dir, "source.pdf")
         await run_cmd([
             "libreoffice", "--headless", "--convert-to", "pdf",
             ppt_path, "--outdir", task_dir
         ])
 
-        # 3️⃣ PDF ➜ 图片 & 读取 PPTX（线程池）
         images_from_path = await run_blocking(convert_from_path, pdf_path)
         prs = await run_blocking(PptxPresentation, ppt_path)
 
@@ -302,7 +285,6 @@ async def process_ppt_to_video(task_id: str):
         )
         await send_ppt_video_progress(task_id)
 
-        # 4️⃣ 生成语音
         ppt_video_progress_store[task_id].update(current_step=2, progress_percentage=30.00)
         await send_ppt_video_progress(task_id)
 
@@ -315,33 +297,27 @@ async def process_ppt_to_video(task_id: str):
                 )
                 await send_ppt_video_progress(task_id)
 
-                # 获取备注
                 notes = slide.notes_slide.notes_text_frame.text if slide.has_notes_slide else ""
                 if not notes.strip():
-                    notes = f"这是第{i + 1}页幻灯片"
+                    notes = f"This is the {i + 1} page"
 
-                # 保存画面
                 image_path = pjoin(temp_path, f"frame_{i}.jpg")
                 image.save(image_path)
 
-                # 生成音频
                 audio_path = pjoin(temp_path, f"frame_{i}.wav")
                 await generate_tts_audio(notes, audio_path)
 
-                # 生成视频片段
                 video_segment_path = await create_video_segment(
                     image_path, audio_path, temp_path, i
                 )
                 video_segments.append(video_segment_path)
 
-            # 5️⃣ 合并视频
             ppt_video_progress_store[task_id].update(current_step=3, progress_percentage=80.00)
             await send_ppt_video_progress(task_id)
 
             output_video_path = pjoin(task_dir, "output.mp4")
             await merge_video_segments(video_segments, output_video_path)
 
-        # 成功
         ppt_video_progress_store[task_id].update(
             status="completed",
             progress_percentage=100.00,
@@ -350,36 +326,29 @@ async def process_ppt_to_video(task_id: str):
         await send_ppt_video_progress(task_id)
 
     except Exception as e:
-        logger.error(f"PPT转视频任务失败 {task_id}: {e}")
+        logger.error(f"PPT2Presentation task failed {task_id}: {e}")
         ppt_video_progress_store[task_id].update(status="failed", error_message=str(e))
         await send_ppt_video_progress(task_id)
 
 
 async def generate_tts_audio(text: str, output_path: str):
-    """使用MegaTTS3生成语音"""
     try:
-        # 导入MegaTTS3模块
         sys.path.append(pjoin(os.path.dirname(__file__), "MegaTTS3"))
         from tts.infer_cli import MegaTTS3DiTInfer
         from tts.utils.audio_utils.io import save_wav
 
-        # 初始化TTS模型
-        infer = MegaTTS3DiTInfer()
+        infer = MegaTTS3DiTInfer(ckpt_root=pjoin(os.path.dirname(__file__), "MegaTTS3", "checkpoints"))
 
-        # 使用默认的英文提示音频
         prompt_audio_path = pjoin(os.path.dirname(__file__), "MegaTTS3", "assets", "English_prompt.wav")
 
-        # 读取提示音频
         with open(prompt_audio_path, 'rb') as f:
             audio_bytes = f.read()
         latent_file = None
         potential_npy = os.path.splitext(prompt_audio_path)[0] + '.npy'
         if os.path.isfile(potential_npy):
             latent_file = potential_npy
-        # 预处理
         resource_context = infer.preprocess(audio_bytes, latent_file)
 
-        # 生成语音
         wav_bytes = infer.forward(
             resource_context,
             text,
@@ -388,17 +357,15 @@ async def generate_tts_audio(text: str, output_path: str):
             t_w=2.5
         )
 
-        # 保存音频
         save_wav(wav_bytes, output_path)
 
     except Exception as e:
-        logger.error(f"TTS生成失败: {str(e)}")
-        # 如果TTS失败，创建一个静音文件
+        logger.error(f"TTS failed: {str(e)}")
         import numpy as np
         import wave
 
         sample_rate = 22050
-        duration = 3.0  # 3秒静音
+        duration = 3.0
         samples = np.zeros(int(sample_rate * duration), dtype=np.int16)
 
         with wave.open(output_path, 'w') as wav_file:
@@ -433,17 +400,16 @@ async def merge_video_segments(video_segments: list[str], output_path: str):
 
 @app.get("/api/ppt-to-video/download/{task_id}")
 async def download_ppt_video(task_id: str):
-    """下载生成的视频"""
     if task_id not in ppt_video_progress_store:
-        raise HTTPException(status_code=404, detail="任务不存在")
+        raise HTTPException(status_code=404, detail="Task not found")
 
     progress = ppt_video_progress_store[task_id]
     if progress["status"] != "completed":
-        raise HTTPException(status_code=404, detail="视频还未生成完成")
+        raise HTTPException(status_code=404, detail="Presentation isn't available")
 
     video_path = pjoin(progress["task_dir"], "output.mp4")
     if not os.path.exists(video_path):
-        raise HTTPException(status_code=404, detail="视频文件不存在")
+        raise HTTPException(status_code=404, detail="Presentation not found")
 
     return FileResponse(
         video_path,
@@ -461,7 +427,6 @@ async def ppt_gen(task_id: str, rerun=False):
         active_connections[task_id] = None
         progress_store[task_id] = json.load(open(pjoin(RUNS_DIR, task_id, "task.json")))
 
-    # Wait for WebSocket connection
     for _ in range(100):
         if task_id in active_connections:
             break
