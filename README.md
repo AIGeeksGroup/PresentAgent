@@ -28,7 +28,7 @@ We present PresentAgent, a multimodal agent that transforms long-form documents 
 
 ![image](presentagent/arch.png)
 
-## 🔧Resource: PresentAgent Papers
+## 🔧Run Your PresentAgent
 
 ### 1. Install & Requirements
 
