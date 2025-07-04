@@ -65,7 +65,7 @@ class MegaTTS3DiTInfer():
     def __init__(
             self, 
             device=None,
-            ckpt_root='/Users/shijingwei/Desktop/PPTAgent_副本/pptagent_ui/MegaTTS3/checkpoints',
+            ckpt_root='checkpoints',
             dit_exp_name='diffusion_transformer',
             frontend_exp_name='aligner_lm',
             wavvae_exp_name='wavvae',
