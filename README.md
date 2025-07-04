@@ -38,16 +38,11 @@ pip install git+https://github.com/icip-cas/PPTAgent.git
 
 ``` sh
 # Clone the repository
-git clone https://github.com/bytedance/MegaTTS3
-cd MegaTTS3
+cd presentagent/MegaTTS3
 ```
 **Requirements (for Linux)**
 
 ``` sh
-
-# Create a python 3.10 conda env (you could also use virtualenv)
-conda create -n megatts3-env python=3.10
-conda activate megatts3-env
 pip install -r requirements.txt
 
 # Set the root directory
@@ -87,20 +82,6 @@ conda env config vars set PYTHONPATH="C:\path\to\MegaTTS3;%PYTHONPATH%" # For co
 set CUDA_VISIBLE_DEVICES=0 # Windows
 $env:CUDA_VISIBLE_DEVICES=0 # Powershell on Windows
 
-```
-
-**Requirements (for Docker)**
-``` sh
-# [The Docker version is currently under testing]
-# ! You should download the pretrained checkpoint before running the following command
-docker build . -t megatts3:latest
-
-# For GPU inference
-docker run -it -p 7929:7929 --gpus all -e CUDA_VISIBLE_DEVICES=0 megatts3:latest
-# For CPU inference
-docker run -it -p 7929:7929  megatts3:latest
-
-# Visit http://0.0.0.0:7929/ for gradio.
 ```
 
 ### 2. Generate Via WebUI
